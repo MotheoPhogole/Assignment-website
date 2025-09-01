@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Calculator - Community Gardens & Food Security</title>
+    <meta name="description" content="Interactive garden planning calculator to estimate plant density, seed costs, and fertilizer requirements for your community garden project">
+    <meta name="author" content="Community Garden Research Team">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 20l10-16m-2 18l-8-14"/>
+                </svg>
+                <span class="logo-text">Garden projects</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="research.html" class="nav-link">Research Findings</a></li>
+                <li><a href="recommendations.html" class="nav-link">Recommendations</a></li>
+                <li><a href="calculator.html" class="nav-link">Garden Calculator</a></li>
+                <li><a href="about.html" class="nav-link">About Us</a></li>
+            </ul>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="mobile-menu-btn">
+                <span>☰</span>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="mobile-menu">
+            <ul class="mobile-nav-links">
+                <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+                <li><a href="research.html" class="mobile-nav-link">Research Findings</a></li>
+                <li><a href="recommendations.html" class="mobile-nav-link">Recommendations</a></li>
+                <li><a href="calculator.html" class="mobile-nav-link">Garden Calculator</a></li>
+                <li><a href="about.html" class="mobile-nav-link">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-8">
+        <div class="container" style="max-width: 64rem;">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-4xl font-bold mb-4 flex items-center">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" stroke-width="2" style="margin-right: 0.75rem;">
+                        <rect x="3" y="3" width="18" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    Garden Planning Calculator
+                </h1>
+                <p class="text-lg" style="color: hsl(var(--muted-foreground))">
+                    Calculate how many plants you can grow in your garden space and estimate the costs 
+                    for seeds and fertilizer. This tool helps you plan your community garden project effectively.
+                </p>
+            </div>
+
+            <div class="grid grid-md-2 gap-6">
+                <!-- Input Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title flex items-center">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;">
+                                <path d="M7 20l10-16m-2 18l-8-14"/>
+                            </svg>
+                            Garden Specifications
+                        </h2>
+                    </div>
+                    <div class="card-content space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label for="garden-length" class="label">Garden Length (meters)</label>
+                                <input
+                                    type="number"
+                                    id="garden-length"
+                                    class="input"
+                                    placeholder="e.g., 10"
+                                    min="0.1"
+                                    max="1000"
+                                    step="0.1"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="garden-width" class="label">Garden Width (meters)</label>
+                                <input
+                                    type="number"
+                                    id="garden-width"
+                                    class="input"
+                                    placeholder="e.g., 8"
+                                    min="0.1"
+                                    max="1000"
+                                    step="0.1"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="plant-type" class="label">Plant Type</label>
+                            <select id="plant-type" class="select">
+                                <option value="">Select a plant type</option>
+                                <option value="tomatoes">Tomatoes</option>
+                                <option value="lettuce">Lettuce</option>
+                                <option value="carrots">Carrots</option>
+                                <option value="peppers">Peppers</option>
+                                <option value="herbs">Herbs</option>
+                                <option value="beans">Beans</option>
+                            </select>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <button id="calculate-btn" class="btn btn-primary" style="flex: 1;">
+                                Calculate Garden Plan
+                            </button>
+                            <button id="reset-btn" class="btn btn-outline">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title flex items-center">
+                            R Calculation Results
+                        </h2>
+                    </div>
+                    <div class="card-content">
+                        <!-- Results Content -->
+                        <div id="results-container" class="space-y-6" style="display: none;">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div style="background-color: hsl(var(--muted) / 0.5); padding: 1rem; border-radius: var(--radius);">
+                                    <div id="area-value" class="text-2xl font-bold" style="color: hsl(var(--primary))">0</div>
+                                    <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground))">Square Meters</div>
+                                </div>
+                                <div style="background-color: hsl(var(--muted) / 0.5); padding: 1rem; border-radius: var(--radius);">
+                                    <div id="plants-value" class="text-2xl font-bold" style="color: hsl(var(--success))">0</div>
+                                    <div id="plants-type" style="font-size: 0.875rem; color: hsl(var(--muted-foreground))">Plants</div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h4 class="font-medium">Cost Breakdown(In Rands)</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <span style="color: hsl(var(--muted-foreground))">Seeds:</span>
+                                        <span id="seed-cost" class="font-medium">R0.00</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span style="color: hsl(var(--muted-foreground))">Fertilizer:</span>
+                                        <span id="fertilizer-cost" class="font-medium">R0.00</span>
+                                    </div>
+                                    <div style="border-top: 1px solid hsl(var(--border)); padding-top: 0.5rem;">
+                                        <div class="flex justify-between text-lg font-semibold">
+                                            <span>Total Cost:</span>
+                                            <span id="total-cost" style="color: hsl(var(--primary))">R0.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="background-color: hsl(var(--accent) / 0.1); padding: 1rem; border-radius: var(--radius);">
+                                <h5 class="font-medium mb-2">Planting Density</h5>
+                                <p id="density-info" style="font-size: 0.875rem; color: hsl(var(--muted-foreground))">
+                                    Select a plant type to see density information.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- No Results Message -->
+                        <div id="no-results" class="text-center py-8">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--muted-foreground))" stroke-width="2" style="margin: 0 auto 1rem;">
+                                <rect x="3" y="3" width="18" height="14" rx="2" ry="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                            <p style="color: hsl(var(--muted-foreground))">
+                                Enter your garden dimensions and select a plant type to see the calculations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plant Reference Guide -->
+            <div class="card mt-8">
+                <div class="card-header">
+                    <h2 class="card-title">Plant Reference Guide</h2>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-md-3 gap-4">
+                        <div style="background-color: hsl(var(--muted) / 0.5); padding: 1rem; border-radius: var(--radius);">
+                            <h4 class="font-medium mb-2">Tomatoes</h4>
+                            <div class="space-y-1" style="font-size: 0.875rem; color: hsl(var(--muted-foreground))">
+                                <div>Density: 2 plants/m²</div>
+                                <div>Seed cost: R5/plant</div>
+                                <div>Fertilizer: R3/plant</div>
+                            </div>
+                        </div>
+                        <div style="background-color: hsl(var(--muted) / 0.5); padding: 1rem; border-radius: var(--radius);">
+                            <h4 class="font-medium mb-2">Lettuce</h4>
+                            <div class="space-y-1" style="font-size: 0.875rem; color: hsl(var(--muted-foreground))">
+                                <div>Density: 16 plants/m²</div>
+                                <div>Seed cost: R1/plant</div>
+                                <div>Fertilizer: R1/plant</div>
+                            </div>
+                        </div>
+                        <div style="background-color: hsl(var(--muted) / 0.5); padding: 1rem; border-radius: var(--radius);">
+                            <h4 class="font-medium mb-2">Carrots</h4>
+                            <div class="space-y-1" style="font-size: 0.875rem; color: hsl(var(--muted-foreground))">
+                                <div>Density: 25 plants/m²</div>
+                                <div>Seed cost: R1/plant</div>
+                                <div>Fertilizer: R1/plant</div>
+                            </div>
+                        </div>
+                        <div style="background-color: hsl(var(--muted) / 0.5); padding: 1rem; border-radius: var(--radius);">
+                            <h4 class="font-medium mb-2">Peppers</h4>
+                            <div class="space-y-1" style="font-size: 0.875rem; color: hsl(var(--muted-foreground))">
+                                <div>Density: 1 plants/m²</div>
+                                <div>Seed cost: R6/plant</div>
+                                <div>Fertilizer: R4/plant</div>
+                            </div>
+                        </div>
+                        <div style="background-color: hsl(var(--muted) / 0.5); padding: 1rem; border-radius: var(--radius);">
+                            <h4 class="font-medium mb-2">Herbs</h4>
+                            <div class="space-y-1" style="font-size: 0.875rem; color: hsl(var(--muted-foreground))">
+                                <div>Density: 9 plants/m²</div>
+                                <div>Seed cost: R3/plant</div>
+                                <div>Fertilizer: R1/plant</div>
+                            </div>
+                        </div>
+                        <div style="background-color: hsl(var(--muted) / 0.5); padding: 1rem; border-radius: var(--radius);">
+                            <h4 class="font-medium mb-2">Beans</h4>
+                            <div class="space-y-1" style="font-size: 0.875rem; color: hsl(var(--muted-foreground))">
+                                <div>Density: 4 plants/m²</div>
+                                <div>Seed cost: R1/plant</div>
+                                <div>Fertilizer: R1/plant</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background-color: hsl(var(--card)); border-top: 1px solid hsl(var(--border)); padding: 2rem 0; text-align: center;">
+        <div class="container">
+            <p style="color: hsl(var(--muted-foreground))">
+                © 2024 Community Garden Research Team. Building sustainable food systems together.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="calculator.js"></script>
+</body>
+</html>
